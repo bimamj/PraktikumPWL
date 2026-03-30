@@ -19,8 +19,11 @@ class ProductsTable
             ->columns([
                 //
                 TextColumn::make('name'),
-                TextColumn::make('sku'),
-                TextColumn::make('price'),
+                TextColumn::make('sku')->color('info'),
+                TextColumn::make('price')
+                    ->formatStateUsing(fn (string $state): string => 'Rp ' . number_format($state, 0, ',', '.'))
+                    ->weight('bold')
+                    ->color('primary'),
                 TextColumn::make('stock'),
                 ImageColumn::make('image')
                 ->disk('public'),
