@@ -12,24 +12,40 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->integer('category_id')->constrained()->cascadeOnDelete();
-            $table->string('color')->nullable();
-            $table->string('image')->nullable();
-            $table->text('body')->nullable();
-            $table->json('tags')->nullable();
-            $table->boolean('published')->default(false);
-            $table->date('published_at')->nullable();
-            $table->timestamps();
-        });
+        //     $table->id();
+        //     $table->string('title');
+        //     $table->string('slug');
+        //     $table->integer('category_id');
+        //     $table->string('color')->nullable();
+        //     $table->string('image')->nullable();
+        //     $table->text('body')->nullable();
+        //     $table->json('tags')->nullable();
+        //     $table->boolean('published')->default(false);
+        //     $table->date('published_at')->nullable();
+        //     $table->timestamps();
+        // });
 
-        Schema::table('posts', function (Blueprint $table) {
+        // Schema::table('posts', function (Blueprint $table) {
+        // $table->foreignId('category_id')
+        //   ->constrained()
+        //   ->cascadeOnDelete()
+        //   ->change();
+        $table->id();
+        $table->string('title');
+        $table->string('slug');
+
+        // This one line handles everything for the category relationship
         $table->foreignId('category_id')
-          ->constrained()
-          ->cascadeOnDelete()
-          ->change();
+              ->constrained()
+              ->cascadeOnDelete();
+
+        $table->string('color')->nullable();
+        $table->string('image')->nullable();
+        $table->text('body')->nullable();
+        $table->json('tags')->nullable();
+        $table->boolean('published')->default(false);
+        $table->date('published_at')->nullable();
+        $table->timestamps();
 });
     }
 
