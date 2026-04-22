@@ -20,23 +20,34 @@ class PostsTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make("id")
+                    ->label("ID")
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make("title")
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make("slug")
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make("category.name")
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 ColorColumn::make("color"),
                 ImageColumn::make("image")->disk("public"),
                 TextColumn::make("created_at")
                     ->Label("Created At")
                     ->dateTime()
                     ->sortable(),
-                IconColumn::make("published")->boolean()->label("Published Status"),
+                TextColumn::make('tags')
+                    ->label("Tags")
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make("published")
+                    ->boolean()
+                    ->label("Published Status"),
             ])->defaultSort("created_at", "asc")
             ->filters([
                 Filter::make("created_at")
@@ -52,7 +63,7 @@ class PostsTable
                             fn ($query, $date) => $query->whereDate('created_at', $date),
                         );
                     }),
-                    
+
                 SelectFilter::make('category_id')
                     ->relationship('category', 'name')
                     ->label("Category")
